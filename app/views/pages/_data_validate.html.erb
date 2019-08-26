@@ -1,0 +1,61 @@
+<%= form_with url: data_validate_submit_path do |form| %>
+    <%= form.hidden_field :sidebar, value: params[:sidebar] %>
+    <%= form.hidden_field :mode, value: "validate" %>
+    <h4><%= t('data.input_data') %></h4>
+    <p style><%= t('data.input_data_text') %></p>
+    <%= form.hidden_field :input_data, id: "input_data" %>
+    <div id="editor_input_data" style="height: 100px; width: 100%; border-radius: 2px; border: 1px solid #DDD; margin-bottom: 15px;"><%= @data_format_input_data %></div>
+    <p>&nbsp;</p>
+
+    <h4><%= t('data.constraints') %></h4>
+    <p><a href="https://en.wikipedia.org/wiki/SHACL">SHACL</a> <%= t('data.constraints_text') %></p>
+    <%= form.hidden_field :data_constraints, id: "data_constraints" %>
+    <div id="editor_data_constraints" style="height: 100px; width: 100%; border-radius: 2px; border: 1px solid #DDD; margin-bottom: 15px;"><%= @data_format_constraints %></div>
+
+    <% if !@data_valid.nil? 
+            if @data_valid %>
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <%= t('data.validation_success') %>
+                </div>
+         <% else %>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <%= t('data.validation_failure') %>
+                </div>
+         <% end
+       end %>
+
+    <%= form.button value: "validate", class: "btn btn-primary", style:"margin-right: 10px;", onclick: "$('#input_data').val(ace.edit('editor_input_data').getSession().getValue()); $('#data_constraints').val(ace.edit('editor_data_constraints').getSession().getValue()); return true;" do %>
+        <span class="fa fa-check-square-o" aria-hidden="true"></span>
+        <%= t('data.validate') %>
+    <% end %>
+    <%= form.button value: "reset", class: "btn btn-default" do %>
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+        <%= t('general.reset') %>
+    <% end %>
+<% end %>
+
+<script type="text/javascript">
+    var editor_input_data = ace.edit("editor_input_data");
+    editor_input_data.setOptions({
+        showPrintMargin: true,
+        maxLines: 10,
+        fontSize: "100%"
+    });
+    editor_input_data.setTheme("ace/theme/chrome");
+    editor_input_data.renderer.setOption("showLineNumbers", true);
+
+    var editor_data_constraints = ace.edit("editor_data_constraints");
+    editor_data_constraints.setOptions({
+        showPrintMargin: true,
+        maxLines: 10,
+        fontSize: "100%"
+    });
+    editor_data_constraints.setTheme("ace/theme/chrome");
+    editor_data_constraints.renderer.setOption("showLineNumbers", true);
+</script>

@@ -1,0 +1,44 @@
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="<%= @mode == "" ? 'active' : '' %>">
+        <a href="#usage_create" aria-controls="usage_create" role="tab" data-toggle="tab">
+            <%= t('general.creation') %>
+        </a>
+    </li>
+    <li role="presentation" class="<%= @mode == "match" ? 'active' : '' %>">
+        <a href="#usage_match" aria-controls="usage_match" role="tab" data-toggle="tab">
+            <%= t('general.matching') %>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a href="#usage_visualize" aria-controls="usage_visualize" role="tab" data-toggle="tab">
+            <%= t('general.visualizing') %>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a href="#usage_examples" aria-controls="usage_examples" role="tab" data-toggle="tab">
+            <%= t('general.examples') %>
+        </a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane<%= @mode == "" ? ' active' : '' %>" id="usage_create">
+        <div style="padding: 10px;">
+            <%= render partial: "usage_create" %>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane<%= @mode == "match" ? ' active' : '' %>" id="usage_match">
+        <div style="padding: 10px;">
+            <%= render partial: "usage_match" %>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="usage_visualize">
+        <div style="padding: 10px;">
+            translate usage policy TRIG into easily readable text - coming soon
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="usage_examples">
+        <div style="padding: 10px;">
+            <%= render partial: "usage_examples" %>
+        </div>
+    </div>
+</div>

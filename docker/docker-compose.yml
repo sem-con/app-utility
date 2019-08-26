@@ -1,0 +1,14 @@
+web:
+  image: semcon/app-utility
+  environment:
+    RAILS_ENV: production
+    RAILS_LOG_TO_STDOUT: "TRUE"
+  links:
+    - semconutil_db
+  ports:
+    - "3100:3000"
+
+semconutil_db:
+  image: postgres:9.4.5
+  volumes: 
+    - app-utility-postgres:/var/lib/postgresql/data

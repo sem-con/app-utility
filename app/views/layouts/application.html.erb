@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title><%= t('general.title') %></title>
+    <%= csrf_meta_tags %>
+  
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','<%= ENV["GOOGLE_TOKEN"] %>');</script>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+  </head>
+
+  <body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<%= ENV["GOOGLE_TOKEN"] %>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <div class="wrapper">
+        <nav id="sidebar" class="<%= params[:sidebar] == "collapse" ? "active" : "" %>">
+            <div class="sidebar-header">
+                <strong>
+                    <a href="https://www.ownyourdata.eu/<%= I18n.locale.to_s %>">
+                        <%= image_tag 'oyd.png', style: "height: 50px; margin: 18px 0 0; border: 5px solid white;" %>
+                    </a><br>
+                    <span style="font-size: 12px;">SemCon</span>
+                </strong>
+                <h3 style="text-align: center;">
+                    <a href="https://www.ownyourdata.eu/<%= I18n.locale.to_s %>">
+                        <%= image_tag 'oyd.png', style: "height: 80px; margin: 18px 0; border: 5px solid white" %>
+                    </a><br>Semantic Container
+                </h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li class="<%= action_name == "container_definition" ? "active" : "" %>">
+                    <%= link_to container_definition_path(sidebar: (params[:sidebar] || "expand")) do %>
+                        <i class="fa fa-sliders"></i>
+                        Container Definition
+                    <% end %>
+                </li>
+                <li class="<%= action_name == "usage_policy" ? "active": "" %>">
+                    <%= link_to usage_policy_path(sidebar: (params[:sidebar] || "expand")) do %>
+                        <i class="fa fa-hand-pointer-o"></i>
+                        Usage Policy
+                    <% end %>
+                </li>
+                <li class="<%= action_name == "data_format" ? "active": "" %>">
+                    <%= link_to data_format_path(sidebar: (params[:sidebar] || "expand")) do %>
+                        <i class="fa fa-database"></i>
+                        <%= t('general.data_format') %>
+                    <% end %>
+                </li>
+                <li class="<%= action_name == "provenance" ? "active": "" %>">
+                    <%= link_to provenance_path(sidebar: (params[:sidebar] || "expand")) do %>
+                        <i class="fa fa-forward"></i>
+                        Provenance
+                    <% end %>
+                </li>
+                <li class="<%= action_name == "index" ? "active": "" %>">
+                    <%= link_to root_path(sidebar: (params[:sidebar] || "expand")) do %>
+                        <i class="fa fa-info-circle"></i>
+                        Information
+                    <% end %>
+                </li>
+            </ul>
+            <ul class="list-unstyled components" style="padding: 0; border-bottom: 0;">
+                <p style="color: white; padding: 0 15px; margin: 0;"><strong><%= t('general.view') %>:</strong></p>
+                <li>
+                    <% if params[:sidebar].to_s == "collapse" %>
+                        <%= link_to t('general.expand'), request.query_parameters.merge(locale: I18n.locale.to_s, sidebar: "expand"), { style: "padding: 3px 15px;"} %>
+                    <% else %>
+                        <%= link_to t('general.collapse'), request.query_parameters.merge(locale: I18n.locale.to_s, sidebar: "collapse"), { style: "padding: 3px 15px;"} %>
+                    <% end %>
+                </li>
+                <% if I18n.locale.to_s == "de" %>
+                    <li><%= link_to "in English", request.query_parameters.merge(locale: 'en', sidebar: (params[:sidebar] || "expand")), { style: "padding: 3px 15px;"} %></li>
+                <% end %>
+                <% if I18n.locale.to_s == "en" %>
+                    <li><%= link_to "auf Deutsch", request.query_parameters.merge(locale: 'de', sidebar: (params[:sidebar] || "expand")), { style: "padding: 3px 15px;"} %></li>
+                <% end %>
+            </ul>
+        </nav>
+        <div id="content">
+            <%= yield %>
+            <p>&nbsp;</p>
+            <hr style="margin-bottom: 10px;">
+            &copy; <a href="https://www.ownyourdata.eu/<%= I18n.locale %>">OwnYourData.eu</a>
+            <% if I18n.locale.to_s == "en" %>
+              <a href="https://www.ownyourdata.eu/en/imprint/" style="margin: 0 10px;">Imprint</a>
+              <a href="https://www.ownyourdata.eu/en/privacy-policy/">Privacy Policy</a>
+            <% else %>
+              <a href="https://www.ownyourdata.eu/de/impressum/" style="margin: 0 10px;">Impressum</a>
+              <a href="https://www.ownyourdata.eu/de/datenschutz/">Datenschutz</a>
+            <% end %>
+        </div>        
+    </div>
+
+<script type="text/javascript">
+    function copyFunction(ctrl) {
+        var editor = ace.edit(ctrl);
+        var sel = editor.selection.toJSON(); // save selection
+        editor.selectAll();
+        editor.focus();
+        document.execCommand('copy');
+        editor.selection.fromJSON(sel); // restore selection
+        $('#copyButton_' + ctrl).attr('data-original-title', "<%= t('general.clipboardCopied') %>").tooltip('show');
+    };
+
+    function outFunc(ctrl) {
+        $('#copyButton_' + ctrl).attr('data-original-title', "<%= t('general.copyClipboard') %>").tooltip('hide');
+    };
+
+    function downloadFunction(ctrl, filename) {
+        var editor = ace.edit(ctrl);
+        var file = new File([editor.getValue()], filename, {type: "text/plain;charset=utf-8"});
+        saveAs(file);
+    };
+</script>
+
+
+  </body>
+</html>

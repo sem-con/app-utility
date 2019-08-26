@@ -1,0 +1,220 @@
+<%= form_with url: usage_create_submit_path do |form| %>
+    <%= form.hidden_field :sidebar, value: params[:sidebar] %>
+    <h4><%= t('general.settings') %></h4>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  <%= t('general.usage.options') %>
+                </a>
+              </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+
+                    <p style="color: black;"><%= raw t('general.usage.policy_reference') %></p>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('usage.data.label') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.collection_select(:data_category, @data_list,
+                                        :last, :first, { selected: @data_select }, 
+                                        multiple: true, id: "data-selection" ) %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('usage.purpose.label') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.collection_select(:purpose, @purpose_list,
+                                        :last, :first, { selected: @purpose_select }, 
+                                        multiple: true, id: "purpose-selection" ) %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group" style="margin-bottom: 0">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('usage.processing.label') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.collection_select(:processing, 
+                                        { t('usage.processing.aggregate') => "Aggregate", 
+                                          t('usage.processing.analyze')   => "Analyze" ,
+                                          t('usage.processing.anonymize') => "Anonymize",
+                                          t('usage.processing.collect')   => "Collect",
+                                          t('usage.processing.copy')      => "Copy",
+                                          t('usage.processing.derive')    => "Derive",
+                                          t('usage.processing.move')      => "Move",
+                                          t('usage.processing.query')     => "Query",
+                                          t('usage.processing.transfer')  => "Transfer" }, 
+                                        :last, :first, { selected: @processing_select }, 
+                                        multiple: true, id: "processing-selection" ) %>
+                            </div>
+                            <!-- <div style="white-space: nowrap; display: inline;">
+                                <%= form.check_box :check_participants, style: "margin-left: 15px;" %>
+                                <label class="control-label" style="margin-top: 14px; margin-left: 5px;"><%= t('general.min_participants') %>:</label>
+                                <%= form.number_field :num_participants, class: "form-control",  style: "width: 70px; display: inline; margin-left: 10px;" %>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('usage.recipient.label') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.collection_select(:recipient,
+                                        { t('usage.recipient.ours')      => "Ours",
+                                          t('usage.recipient.delivery')  => "Delivery",
+                                          t('usage.recipient.same')      => "Same",
+                                          t('usage.recipient.other')     => "OtherRecipient",
+                                          t('usage.recipient.unrelated') => "Unrelated",
+                                          t('usage.recipient.public')    => "Public" }, 
+                                        :last, :first, { selected: @recipient_select }, 
+                                        multiple: true, id: "recipient-selection" ) %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group"">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('usage.location.label') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.collection_select(:storage_location, 
+                                        { t('usage.location.our_servers')     => "OurServers",
+                                          t('usage.location.third_parties')   => "ThirdParty",
+                                          t('usage.location.eu')              => "EU" ,
+                                          t('usage.location.eu_like')         => "EULike",
+                                          t('usage.location.third_countries') => "ThirdCountries" }, 
+                                        :last, :first, { selected: @storage_location_select }, 
+                                        multiple: true, id: "storage-location-selection" ) %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('usage.duration.label') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.collection_select(:storage_duration, 
+                                        { t('usage.duration.stated_purpose')     => "StatedPurpose", 
+                                          t('usage.duration.legal_requirements')  => "LegalRequirement",
+                                          t('usage.duration.business_practices') => "BusinessPractices", 
+                                          t('usage.duration.indefinitely')       => "Indefinitely" }, 
+                                        :last, :first, { selected: @storage_duration_select }, 
+                                        multiple: false, id: "storage-duration-selection" ) %>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <%= form.button value: "create", class: "btn btn-primary", style:"margin-right: 10px;" do %>
+        <span class="fa fa-file-text-o" aria-hidden="true"></span>
+        <%= t('general.create') %>
+    <% end %>
+    <%= form.button value: "reset", class: "btn btn-default" do %>
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+        <%= t('general.reset') %>
+    <% end %>
+    <p>&nbsp;</p>
+    <h4>Usage Policy</h4>
+    <%= form.hidden_field :usage_policy, id: "usage_policy" %>
+    <div id="editor_create" style="height: 100px; width: 100%; border-radius: 2px; border: 1px solid #DDD; margin-bottom: 15px;"><%= @usage_policy %></div>
+
+    <% if params[:valid].to_s == "true" %>
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <%= t('general.usage.validation_success') %>
+        </div>
+    <% end %>
+    <% if params[:valid].to_s == "false" %>
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <%= t('general.usage.validation_failure') %>
+        </div>
+    <% end %>
+
+    <%= form.button value: "validate", class: "btn btn-success", onclick: "$('#usage_policy').val(ace.edit('editor_create').getSession().getValue()); return true;" do %>
+        <span class="fa fa-check-square-o" aria-hidden="true"></span>
+        <%= t('general.validate') %>
+    <% end %>
+    <button onclick="copyFunction('editor_create'); return false;" onmouseout="outFunc()" 
+        class="btn btn-default" style="margin-right: 10px;"
+        data-toggle="tooltip" data-placement="right" 
+        title="<%= t('general.copyClipboard') %>" id="copyButton_editor_create">
+        <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+        <%= t('general.copy') %>
+    </button>
+    <button class="btn btn-default" onclick="downloadFunction('editor_create', 'usage_policy.trig'); return false;">
+        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+        <%= t('general.download') %>
+    </button>
+<% end %>
+
+<script type="text/javascript">
+    var editor = ace.edit("editor_create");
+    editor.setOptions({
+        showPrintMargin: true,
+        maxLines: 15,
+        fontSize: "100%"
+    });
+    editor.setTheme("ace/theme/chrome");
+    editor.renderer.setOption("showLineNumbers", true);
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#data-selection').multiselect({ 
+            nonSelectedText: '<%= t("general.none_select") %>',
+            includeSelectAllOption: true,
+            numberDisplayed: 1,
+            selectAllText: '<%= t("general.select_all") %>',
+            nSelectedText: '<%= t("general.nselect") %>',
+            allSelectedText:  '<%= t("general.all_selected") %>'});
+        $('#recipient-selection').multiselect({ 
+            nonSelectedText: '<%= t("general.none_select") %>',
+            includeSelectAllOption: true,
+            numberDisplayed: 1,
+            selectAllText: '<%= t("general.select_all") %>',
+            nSelectedText: '<%= t("general.nselect") %>',
+            allSelectedText:  '<%= t("general.all_selected") %>'});
+        $('#purpose-selection').multiselect({ 
+            nonSelectedText: '<%= t("general.none_select") %>',
+            includeSelectAllOption: true,
+            numberDisplayed: 1,
+            selectAllText: '<%= t("general.select_all") %>',
+            nSelectedText: '<%= t("general.nselect") %>',
+            allSelectedText:  '<%= t("general.all_selected") %>'});
+        $('#processing-selection').multiselect({ 
+            nonSelectedText: '<%= t("general.none_select") %>',
+            includeSelectAllOption: true,
+            numberDisplayed: 1,
+            selectAllText: '<%= t("general.select_all") %>',
+            nSelectedText: '<%= t("general.nselect") %>',
+            allSelectedText:  '<%= t("general.all_selected") %>'});
+        $('#storage-location-selection').multiselect({ 
+            nonSelectedText: '<%= t("general.none_select") %>',
+            includeSelectAllOption: true,
+            numberDisplayed: 1,
+            selectAllText: '<%= t("general.select_all") %>',
+            nSelectedText: '<%= t("general.nselect") %>',
+            allSelectedText:  '<%= t("general.all_selected") %>'});
+        $('#storage-duration-selection').multiselect({ 
+            nonSelectedText: '<%= t("general.none_select") %>',
+            includeSelectAllOption: true,
+            numberDisplayed: 1,
+            selectAllText: '<%= t("general.select_all") %>',
+            nSelectedText: '<%= t("general.nselect") %>',
+            allSelectedText:  '<%= t("general.all_selected") %>'});
+    });
+</script>

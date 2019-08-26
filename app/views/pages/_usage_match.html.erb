@@ -1,0 +1,61 @@
+<%= form_with url: usage_match_submit_path do |form| %>
+    <%= form.hidden_field :sidebar, value: params[:sidebar] %>
+    <%= form.hidden_field :mode, value: "match" %>
+    <h4><%= t('usage.data_subject') %></h4>
+    <p style><%= t('usage.data_subject_text') %></p>
+    <%= form.hidden_field :data_subject, id: "data_subject" %>
+    <div id="editor_data_subject" style="height: 100px; width: 100%; border-radius: 2px; border: 1px solid #DDD; margin-bottom: 15px;"><%= @usage_data_subject %></div>
+    <p>&nbsp;</p>
+
+    <h4><%= t('usage.data_controller') %></h4>
+    <p><%= t('usage.data_controller_text') %></p>
+    <%= form.hidden_field :data_controller, id: "data_controller" %>
+    <div id="editor_data_controller" style="height: 100px; width: 100%; border-radius: 2px; border: 1px solid #DDD; margin-bottom: 15px;"><%= @usage_data_controller %></div>
+
+    <% if !@match_valid.nil? 
+            if @match_valid %>
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <%= t('usage.matching_success') %>
+                </div>
+         <% else %>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <%= t('usage.matching_failure') %>
+                </div>
+         <% end
+       end %>
+
+    <%= form.button value: "match", class: "btn btn-primary", style:"margin-right: 10px;", onclick: "$('#data_subject').val(ace.edit('editor_data_subject').getSession().getValue()); $('#data_controller').val(ace.edit('editor_data_controller').getSession().getValue()); return true;" do %>
+        <span class="fa fa-check-square-o" aria-hidden="true"></span>
+        <%= t('usage.match') %>
+    <% end %>
+    <%= form.button value: "reset", class: "btn btn-default" do %>
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+        <%= t('general.reset') %>
+    <% end %>
+<% end %>
+
+<script type="text/javascript">
+    var editor_subject = ace.edit("editor_data_subject");
+    editor_subject.setOptions({
+        showPrintMargin: true,
+        maxLines: 10,
+        fontSize: "100%"
+    });
+    editor_subject.setTheme("ace/theme/chrome");
+    editor_subject.renderer.setOption("showLineNumbers", true);
+
+    var editor_controller = ace.edit("editor_data_controller");
+    editor_controller.setOptions({
+        showPrintMargin: true,
+        maxLines: 10,
+        fontSize: "100%"
+    });
+    editor_controller.setTheme("ace/theme/chrome");
+    editor_controller.renderer.setOption("showLineNumbers", true);
+</script>

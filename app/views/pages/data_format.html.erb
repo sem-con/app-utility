@@ -1,0 +1,34 @@
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+        <a href="#data_validate" aria-controls="data_validate" role="tab" data-toggle="tab">
+            <%= t('general.validation') %>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a href="#data_create" aria-controls="data_create" role="tab" data-toggle="tab">
+            <%= t('general.creation') %>
+        </a>
+    </li>
+    <li role="presentation" class="">
+        <a href="#data_examples" aria-controls="data_examples" role="tab" data-toggle="tab">
+            <%= t('general.examples') %>
+        </a>
+    </li>
+</ul>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="data_validate">
+        <div style="padding: 10px;">
+            <%= render partial: "data_validate" %>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="data_create">
+        <div style="padding: 10px;">
+            create data submission
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="data_examples">
+        <div style="padding: 10px;">
+            examples for data submissions
+        </div>
+    </div>
+</div>

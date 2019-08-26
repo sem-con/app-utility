@@ -1,0 +1,25 @@
+<h4>Unrestricted Access</h4>
+<p>Example Usage Policy without any limitation</p>
+<div id="editor_unrestricted" style="height: 100px; width: 100%; border-radius: 2px; border: 1px solid #DDD; margin-bottom: 15px;"><%= File.read("data/usage_policy-unrestricted.trig") %></div>
+<button onclick="copyFunction('editor_unrestricted'); return false;" onmouseout="outFunc('editor_unrestricted')" 
+    class="btn btn-info" style="margin-right: 10px;"
+    data-toggle="tooltip" data-placement="right" 
+    title="<%= t('general.copyClipboard') %>" id="copyButton_editor_unrestricted">
+    <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+    <%= t('general.copy') %>
+</button>
+<button class="btn btn-info" onclick="downloadFunction('editor_unrestricted', 'usage_policy.trig'); return false;">
+    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+    <%= t('general.download') %>
+</button>
+
+<script type="text/javascript">
+    var editor = ace.edit("editor_unrestricted");
+    editor.setOptions({
+        showPrintMargin: true,
+        maxLines: 10,
+        fontSize: "100%"
+    });
+    editor.setTheme("ace/theme/chrome");
+    editor.renderer.setOption("showLineNumbers", true);
+</script>

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: semcon-util-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: semcon-util
+  template:
+    metadata:
+      labels:
+        app: semcon-util
+    spec:
+      containers:
+      - name: semcon-util
+        image: oydeu/weekly-digest:latest
+        ports:
+        - containerPort: 3000
+        env:
+          - name: LANG
+            value: C.UTF-8
+          - name: RAILS_LOG_TO_STDOUT
+            value: "TRUE"
+          - name: RAILS_SERVE_STATIC_FILES
+            value: "TRUE"
+          - name: RAILS_ENV
+            value: production
+          - name: DB_HOST
+            value: db-cluster-postgresql.default.svc.cluster.local
+          - name: DB_NAME
+            value: semcon-util_production
+          - name: DB_USER
+            value: postgres
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: general-secrets
+                key: db-passwd
+          - name: SECRET_KEY_BASE
+            valueFrom:
+              secretKeyRef:
+                name: semcon-util-secrets
+                key: secret-key-base
+          - name: GOOGLE_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: general-secrets
+                key: google-token

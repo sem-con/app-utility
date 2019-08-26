@@ -1,0 +1,53 @@
+<h4>Step Count</h4>
+<p>Auf <a href="https://donate.ownyourdata.eu" style="text-decoration: underline;">https://donate.ownyourdata.eu</a> können Benutzer ihre Schrittzahl-Daten gratis zur Verfügung stellen.</p>
+<div id="editor_stepcount" style="height: 100px; width: 100%; border-radius: 2px; border: 1px solid #DDD; margin-bottom: 15px;"><%= File.read("data/stepcount-init.trig") %></div>
+<button onclick="copyFunction('editor_stepcount'); return false;" onmouseout="outFunc('editor_stepcount')" 
+    class="btn btn-info" style="margin-right: 10px;"
+    data-toggle="tooltip" data-placement="right" 
+    title="<%= t('general.copyClipboard') %>" id="copyButton_editor_stepcount">
+    <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+    <%= t('general.copy') %>
+</button>
+<button class="btn btn-info" onclick="downloadFunction('editor_stepcount', 'init.trig'); return false;">
+    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+    <%= t('general.download') %>
+</button>
+
+<script type="text/javascript">
+    var editor = ace.edit("editor_stepcount");
+    editor.setOptions({
+        showPrintMargin: true,
+        maxLines: 10,
+        fontSize: "100%"
+    });
+    editor.setTheme("ace/theme/chrome");
+    editor.renderer.setOption("showLineNumbers", true);
+</script>
+
+<p>&nbsp;</p>
+
+<h4>Seismische Aktivitäten</h4>
+<p>Gibt eine Liste der seismischen Aktivitäten in einem Radius um vorgegebene Koordination innerhalb einer Zeitspanne aus.</p>
+<div id="editor_zamg" style="height: 100px; width: 100%; border-radius: 2px; border: 1px solid #DDD; margin-bottom: 15px;"><%= File.read("data/zamg-init.trig") %></div>
+<button onclick="copyFunction('editor_zamg'); return false;" onmouseout="outFunc('editor_zamg')" 
+    class="btn btn-info" style="margin-right: 10px;"
+    data-toggle="tooltip" data-placement="right" 
+    title="<%= t('general.copyClipboard') %>" id="copyButton_editor_zamg">
+    <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+    <%= t('general.copy') %>
+</button>
+<button class="btn btn-info" onclick="downloadFunction('editor_zamg', 'init.trig'); return false;">
+    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+    <%= t('general.download') %>
+</button>
+
+<script type="text/javascript">
+    var editor = ace.edit("editor_zamg");
+    editor.setOptions({
+        showPrintMargin: true,
+        maxLines: 10,
+        fontSize: "100%"
+    });
+    editor.setTheme("ace/theme/chrome");
+    editor.renderer.setOption("showLineNumbers", true);
+</script>

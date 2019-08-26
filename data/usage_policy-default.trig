@@ -1,0 +1,44 @@
+:ContainerPolicy rdf:type owl:Class ; # this line should not be changed!
+    owl:equivalentClass [ 
+        owl:intersectionOf ( 
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasData ;
+                owl:someValuesFrom spl:AnyData
+            ]
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasProcessing ;
+                owl:someValuesFrom spl:AnyProcessing
+            ]
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasPurpose ;
+                owl:someValuesFrom spl:AnyPurpose
+            ]
+            [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasRecipient ;
+                owl:someValuesFrom spl:AnyRecipient
+            ]
+            [
+                rdf:type owl:Restriction ;
+                owl:onProperty spl:hasStorage ;
+                owl:someValuesFrom [
+                    owl:intersectionOf (
+                        [
+                            rdf:type owl:Restriction ;
+                            owl:onProperty spl:hasLocation ;
+                            owl:someValuesFrom spl:AnyLocation
+                        ]
+                        [
+                            rdf:type owl:Restriction ;
+                            owl:onProperty spl:hasDuration ;
+                            owl:someValuesFrom svdu:LegalRequirement
+                        ]
+                    )
+                ]
+            ]) ;
+        ) ;
+        rdf:type owl:Class
+    ] .

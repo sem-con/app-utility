@@ -1,0 +1,235 @@
+<%= form_with url: init_create_submit_path do |form| %>
+    <%= form.hidden_field :sidebar, value: params[:sidebar] %>
+    <h4><%= t('general.settings') %></h4>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  <%= t('general.init.general') %>
+                </a>
+              </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('general.init.title') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.text_field :title, value: @title %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('general.init.description') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.text_area :description, rows: 2, style: "width: 100%", value: @description %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 5px;">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('general.init.creator') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.collection_select(:creator_type,
+                                        { t('general.init.creator_none')       => "none",
+                                          t('general.init.creator_type_person')       => "person",
+                                          t('general.init.creator_type_organization') => "org" }, 
+                                        :last, :first, { selected: @creator_type }, 
+                                        multiple: false, id: "creator_type-selection" ) %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px; padding-left: 30px;">Name:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.text_field :creator_name, value: @creator_name %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px; padding-left: 30px;">Email:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.text_field :creator_email, value: @creator_email %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Usage Policy
+                </a>
+              </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <%= t('general.init.usage_policy_hint') %>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;">Usage Policy:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.text_area :usage_policy, rows: 4, style: "width: 100%; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;", value: @usage_policy %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <%= t('general.init.data') %>
+                </a>
+              </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                    <div class="row" style="margin-bottom: 5px;">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('general.init.native_syntax') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.collection_select(:data_format,
+                                        { t('general.init.native_syntax_none')   => "none",
+                                          t('general.init.native_syntax_csv')    => "csv",
+                                          t('general.init.native_syntax_json')   => "json",
+                                          t('general.init.native_syntax_turtle') => "turtle" }, 
+                                        :last, :first, { selected: @data_format_select }, 
+                                        multiple: false, id: "data_format-selection" ) %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 15px;">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('general.init.data_example') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.text_area :data_example, rows: 3, style: "width: 100%" %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <%= t('general.init.data_source_hint') %>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('general.init.data_model') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.text_area :data_model, rows: 3, style: "width: 100%" %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;"><%= t('general.init.data_constraints') %>:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.text_area :data_constraints, rows: 3, style: "width: 100%" %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingFour">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                  <%= t('general.validation') %>
+                </a>
+              </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-3 col-md-2 control-label" style="margin-top: 14px;">Image Constraints:</label>
+                            <div class="col-xs-9 col-md-10" style="margin-top: 7px;">
+                                <%= form.text_area :image_constraints, rows: 4, style: "width: 100%; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace;", value: @image_constraints %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+    <%= form.button value: "create", class: "btn btn-primary", style:"margin-right: 10px;" do %>
+        <span class="fa fa-file-text-o" aria-hidden="true"></span>
+        <%= t('general.create') %>
+    <% end %>
+    <%= form.button value: "reset", class: "btn btn-default" do %>
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+        <%= t('general.reset') %>
+    <% end %>
+    <p>&nbsp;</p>
+    <h4>Container Definition</h4>
+    <%= form.hidden_field :init_trig, id: "init_trig" %>
+    <div id="editor_create" style="height: 100px; width: 100%; border-radius: 2px; border: 1px solid #DDD; margin-bottom: 15px;"><%= @init_create %></div>
+
+    <% if params[:valid].to_s == "true" %>
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <%= t('general.init.validation_success') %>
+        </div>
+    <% end %>
+    <% if params[:valid].to_s == "false" %>
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <%= t('general.init.validation_failure') %>
+        </div>
+    <% end %>
+
+    <%= form.button value: "validate", class: "btn btn-success", onclick: "$('#init_trig').val(ace.edit('editor_create').getSession().getValue()); return true;" do %>
+        <span class="fa fa-check-square-o" aria-hidden="true"></span>
+        <%= t('general.validate') %>
+    <% end %>
+    <button onclick="copyFunction('editor_create'); return false;" onmouseout="outFunc('editor_create')" 
+        class="btn btn-default" style="margin-right: 10px;"
+        data-toggle="tooltip" data-placement="right" 
+        title="<%= t('general.copyClipboard') %>" id="copyButton_editor_create">
+        <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+        <%= t('general.copy') %>
+    </button>
+    <button class="btn btn-default" onclick="downloadFunction('editor_create', 'init.trig'); return false;">
+        <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+        <%= t('general.download') %>
+    </button>
+<% end %>
+
+<script type="text/javascript">
+    var editor = ace.edit("editor_create");
+    editor.setOptions({
+        showPrintMargin: true,
+        maxLines: 15,
+        fontSize: "100%"
+    });
+    editor.setTheme("ace/theme/chrome");
+    editor.renderer.setOption("showLineNumbers", true);
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#data_format-selection').multiselect({ 
+            numberDisplayed: 1 });
+        $('#creator_type-selection').multiselect({ 
+            numberDisplayed: 1 });
+    });
+</script>

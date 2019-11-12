@@ -22,6 +22,9 @@ gem 'font-awesome-rails'
 gem 'therubyracer'
 gem 'ace-rails-ap'
 
+# update for security fixes
+gem 'loofah', '~> 2.3', '>= 2.3.1'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

@@ -70,6 +70,10 @@ en:
       Financial: "Financial Data"
       Government: "Government Data"
       Health: "Health Data"
+      HealthData:
+        Diabetes: Diabetes
+        DiabetesSensor: Sensor
+        DiabetesInsulinPump: Insulin Pump
       Interactive: "Interactive Data"
       Judicial: "Judicial Data"
       Location: "Location Data"

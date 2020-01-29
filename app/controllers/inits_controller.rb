@@ -23,11 +23,18 @@ class InitsController < ApplicationController
 			@ic.save
 			redirect_to container_definition_path(init: @ic.key_id, sidebar: (params[:sidebar] || "expand"))
 		when "validate"
-			init_trig = params[:init_trig].to_s
-			image_constraints = params[:image_constraints].to_s
+			# init_trig = params[:init_trig].to_s
+			# # image_constraints = params[:image_constraints].to_s
+
+			# init = RDF::Reader.for(:trig).new(params[:image_constraints].to_s)
+			# image_constraints = RDF::Repository.load("./config/image-constraints.trig", format: :trig)
+
+			base_config = RDF::Reader.for(:trig).new(params[:init_trig].to_s)
+			image_constraints = RDF::Reader.for(:trig).new(params[:image_constraints].to_s)
+
             init_validation = {
-                "base-config": init_trig,
-                "image-constraints": image_constraints
+                "base-config": base_config.dump(:trig).to_s,
+                "image-constraints": image_constraints.dump(:trig).to_s
             }.stringify_keys
 
             puts "init_validation======"
@@ -56,8 +63,8 @@ class InitsController < ApplicationController
 				data_model: params[:data_model].to_s,
 				data_constraints: params[:data_constraints].to_s,
 				data_example: params[:data_example].to_s,
-				init_trig: init_trig,
-				image_constraints: image_constraints,
+				init_trig: params[:init_trig].to_s,
+				image_constraints: params[:image_constraints].to_s,
 				validation_url: params[:validation_url].to_s,
 				validation: (response.code == 200) )
 			@ic.save

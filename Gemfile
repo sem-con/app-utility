@@ -21,6 +21,8 @@ gem 'bootstrap-sass'
 gem 'font-awesome-rails'
 gem 'therubyracer'
 gem 'ace-rails-ap'
+gem 'rdf'
+gem 'rdf-trig'
 
 # update for security fixes
 gem 'loofah', '~> 2.3', '>= 2.3.1'

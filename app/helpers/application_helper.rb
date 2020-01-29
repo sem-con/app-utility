@@ -45,6 +45,7 @@ module ApplicationHelper
         intro += "@prefix svl: <http://www.specialprivacy.eu/vocabs/locations#> .\n"
         intro += "@prefix svdu: <http://www.specialprivacy.eu/vocabs/duration#> .\n"
         intro += "@prefix svd: <http://www.specialprivacy.eu/vocabs/data#> .\n"
+        intro += "@prefix scp: <http://w3id.org/semcon/ns/policy#> ."
 
         data_subject = get_body(ds).strip
         data_controller = get_body(dc).strip

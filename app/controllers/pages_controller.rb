@@ -88,22 +88,22 @@ class PagesController < ApplicationController
 			t('usage.data.Demographic') => "Demographic",
 			t('usage.data.Derived') => "Derived",
 			t('usage.data.EarthObservation.label') => "EarthObservation",
-			("&nbsp;" * 4 + t('usage.data.EarthObservation.Meteorology')).html_safe => "Meteorology",
-			("&nbsp;" * 8 + t('usage.data.EarthObservation.MeteorologicMeasurement')).html_safe => "MeteorologicMeasurement",
-			("&nbsp;" * 8 + t('usage.data.EarthObservation.MeteorologicForecast')).html_safe => "MeteorologicForecast",
-			("&nbsp;" * 8 + t('usage.data.EarthObservation.MeteorologicCurrent')).html_safe => "MeteorologicCurrent",
-			("&nbsp;" * 8 + t('usage.data.EarthObservation.MeteorologicHistoric')).html_safe => "MeteorologicHistoric",
-			("&nbsp;" * 8 + t('usage.data.EarthObservation.MeteorologicRaster')).html_safe => "MeteorologicRaster",
-			("&nbsp;" * 4 + t('usage.data.EarthObservation.Geophysics')).html_safe => "Geophysics",
-			("&nbsp;" * 8 + t('usage.data.EarthObservation.GeophysicsSeismology')).html_safe => "GeophysicsSeismology",
-			("&nbsp;" * 8 + t('usage.data.EarthObservation.GeophysicsMagneticField')).html_safe => "GeophysicsMagneticField",
-			("&nbsp;" * 8 + t('usage.data.EarthObservation.GeophysicsGravimetry')).html_safe => "GeophysicsGravimetry",
+			("&nbsp;" * 4 + t('usage.data.EarthObservation.Meteorology')).html_safe => "sc_custom_Meteorology",
+			("&nbsp;" * 8 + t('usage.data.EarthObservation.MeteorologicMeasurement')).html_safe => "sc_custom_MeteorologicMeasurement",
+			("&nbsp;" * 8 + t('usage.data.EarthObservation.MeteorologicForecast')).html_safe => "sc_custom_MeteorologicForecast",
+			("&nbsp;" * 8 + t('usage.data.EarthObservation.MeteorologicCurrent')).html_safe => "sc_custom_MeteorologicCurrent",
+			("&nbsp;" * 8 + t('usage.data.EarthObservation.MeteorologicHistoric')).html_safe => "sc_custom_MeteorologicHistoric",
+			("&nbsp;" * 8 + t('usage.data.EarthObservation.MeteorologicRaster')).html_safe => "sc_custom_MeteorologicRaster",
+			("&nbsp;" * 4 + t('usage.data.EarthObservation.Geophysics')).html_safe => "sc_custom_Geophysics",
+			("&nbsp;" * 8 + t('usage.data.EarthObservation.GeophysicsSeismology')).html_safe => "sc_custom_GeophysicsSeismology",
+			("&nbsp;" * 8 + t('usage.data.EarthObservation.GeophysicsMagneticField')).html_safe => "sc_custom_GeophysicsMagneticField",
+			("&nbsp;" * 8 + t('usage.data.EarthObservation.GeophysicsGravimetry')).html_safe => "sc_custom_GeophysicsGravimetry",
 			t('usage.data.Financial') => "Financial",
 			t('usage.data.Government') => "Government",
 			t('usage.data.Health') => "Health",
-			("&nbsp;" * 4 + t('usage.data.HealthData.Diabetes')).html_safe => "Diabetes",
-			("&nbsp;" * 8 + t('usage.data.HealthData.DiabetesSensor')).html_safe => "Sensor",
-			("&nbsp;" * 8 + t('usage.data.HealthData.DiabetesInsulinPump')).html_safe => "InsulinPump",
+			("&nbsp;" * 4 + t('usage.data.HealthData.Diabetes')).html_safe => "sc_custom_Diabetes",
+			("&nbsp;" * 8 + t('usage.data.HealthData.DiabetesSensor')).html_safe => "sc_custom_Sensor",
+			("&nbsp;" * 8 + t('usage.data.HealthData.DiabetesInsulinPump')).html_safe => "sc_custom_InsulinPump",
 			t('usage.data.Interactive') => "Interactive",
 			t('usage.data.Judicial') => "Judicial",
 			t('usage.data.Location') => "Location",
@@ -174,7 +174,8 @@ class PagesController < ApplicationController
 				@usage_policy += "@prefix svpr: <http://www.specialprivacy.eu/vocabs/processing#> .\n"
 				@usage_policy += "@prefix svl: <http://www.specialprivacy.eu/vocabs/locations#> .\n"
 				@usage_policy += "@prefix svdu: <http://www.specialprivacy.eu/vocabs/duration#> .\n"
-				@usage_policy += "@prefix svd: <http://www.specialprivacy.eu/vocabs/data#> .\n\n"
+				@usage_policy += "@prefix svd: <http://www.specialprivacy.eu/vocabs/data#> .\n"
+				@usage_policy += "@prefix scp: <http://w3id.org/semcon/ns/policy#> .\n\n"
 				@usage_policy += ":ContainerPolicy rdf:type owl:Class ; # this line should not be changed!\n"
 				@usage_policy += "    owl:equivalentClass [ \n"
 				@usage_policy += "        owl:intersectionOf ( \n"
@@ -190,7 +191,11 @@ class PagesController < ApplicationController
 					@usage_policy += "[ \n"
 					@usage_policy += "                    owl:unionOf ( \n"
 					@data_select.each do |el|
-						@usage_policy += "                        svd:" + el.to_s + "\n"
+						if el.start_with?("sc_custom_")
+							@usage_policy += "                        scp:" + el.to_s[10..-1] + "\n"
+						else
+							@usage_policy += "                        svd:" + el.to_s + "\n"
+						end
 					end
 					@usage_policy += "                    ) ;\n"
 					@usage_policy += "                ] \n"
@@ -208,7 +213,11 @@ class PagesController < ApplicationController
 					@usage_policy += "[ \n"
 					@usage_policy += "                    owl:unionOf ( \n"
 					@recipient_select.each do |el|
-						@usage_policy += "                        svr:" + el.to_s + "\n"
+						if el.start_with?("sc_custom_")
+							@usage_policy += "                        scp:" + el.to_s[10..-1] + "\n"
+						else
+							@usage_policy += "                        svr:" + el.to_s + "\n"
+						end
 					end
 					@usage_policy += "                    ) ;\n"
 					@usage_policy += "                ] \n"
@@ -226,7 +235,11 @@ class PagesController < ApplicationController
 					@usage_policy += "[ \n"
 					@usage_policy += "                    owl:unionOf ( \n"
 					@purpose_select.each do |el|
-						@usage_policy += "                        svpu:" + el.to_s + "\n"
+						if el.start_with?("sc_custom_")
+							@usage_policy += "                        scp:" + el.to_s[10..-1] + "\n"
+						else
+							@usage_policy += "                        svpu:" + el.to_s + "\n"
+						end
 					end
 					@usage_policy += "                    ) ;\n"
 					@usage_policy += "                ] \n"
@@ -244,7 +257,11 @@ class PagesController < ApplicationController
 					@usage_policy += "[ \n"
 					@usage_policy += "                    owl:unionOf ( \n"
 					@processing_select.each do |el|
-						@usage_policy += "                        svpr:" + el.to_s + "\n"
+						if el.start_with?("sc_custom_")
+							@usage_policy += "                        scp:" + el.to_s[10..-1] + "\n"
+						else
+							@usage_policy += "                        svpr:" + el.to_s + "\n"
+						end
 					end
 					@usage_policy += "                    ) ;\n"
 					@usage_policy += "                ] \n"
@@ -269,7 +286,11 @@ class PagesController < ApplicationController
 					@usage_policy += "[ \n"
 					@usage_policy += "                                owl:unionOf ( \n"
 					@storage_location_select.each do |el|
-						@usage_policy += "                                    svl:" + el.to_s + "\n"
+						if el.start_with?("sc_custom_")
+							@usage_policy += "                        scp:" + el.to_s[10..-1] + "\n"
+						else
+							@usage_policy += "                        svl:" + el.to_s + "\n"
+						end
 					end
 					@usage_policy += "                                ) ;\n"
 					@usage_policy += "                            ] \n"

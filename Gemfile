@@ -25,7 +25,7 @@ gem 'rdf'
 gem 'rdf-trig'
 
 # update for security fixes
-gem 'loofah', '~> 2.3', '>= 2.3.1'
+gem 'loofah', '~> 2.19'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
